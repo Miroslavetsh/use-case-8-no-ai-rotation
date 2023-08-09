@@ -36,18 +36,19 @@
       border-radius: 4px;
 
       &:focus {
-        outline: 2px solid #0d1381;
-      }
-
-      &:valid {
-        outline: 2px solid #0d8136;
-      }
-
-      &:invalid {
-        outline: 2px solid #810d26;
+        outline: 2px solid #0009bc;
       }
     }
+  }
 
+  &__input {
+    &--valid {
+      outline: 2px solid #069f3b;
+    }
+
+    &--invalid {
+      outline: 2px solid #ae0227;
+    }
   }
 
   button {

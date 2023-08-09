@@ -7,7 +7,7 @@ const initialState = {
   message: 'message',
 }
 
-function userReducer(state = initialState, action) {
+export function userReducer(state = initialState, action) {
   switch (action.type) {
     case 'user/first_name':
       return { ...state, ...action.payload }
@@ -17,6 +17,8 @@ function userReducer(state = initialState, action) {
       return { ...state, ...action.payload }
     case 'user/message':
       return { ...state, ...action.payload }
+    case 'user/full_state':
+      return action.payload
     default:
       return state
   }
