@@ -1,10 +1,10 @@
 import { legacy_createStore as createStore } from 'redux'
 
 const initialState = {
-  first_name: 'fName',
-  last_name: 'lName',
-  email: 'email',
-  message: 'message',
+  first_name: '',
+  last_name: '',
+  email: '',
+  message: '',
 }
 
 export function userReducer(state = initialState, action) {

@@ -1,5 +1,5 @@
 import React, { useMemo, useReducer } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import validator from 'validator'
 
 import { userReducer } from '../redux/store'
@@ -29,6 +29,7 @@ const Field = ({ state, name, onChange, valid }) => {
 }
 
 const Form = () => {
+  const store = useSelector((state) => state)
   const dispatchStore = useDispatch()
 
   const [state, dispatch] = useReducer(userReducer, {
@@ -38,12 +39,15 @@ const Form = () => {
     message: '',
   })
 
-  const fields = [
-    { name: 'First Name', valid: validator.isLength(state.first_name, { min: 1 }) },
-    { name: 'Last Name', valid: validator.isLength(state.last_name, { min: 1 }) },
-    { name: 'Email', valid: validator.isEmail(state.email) },
-    { name: 'Message', valid: validator.isLength(state.message, { min: 10 }) },
-  ]
+  const fields = useMemo(
+    () => [
+      { name: 'First Name', valid: validator.isLength(state.first_name, { min: 1 }) },
+      { name: 'Last Name', valid: validator.isLength(state.last_name, { min: 1 }) },
+      { name: 'Email', valid: validator.isEmail(state.email) },
+      { name: 'Message', valid: validator.isLength(state.message, { min: 10 }) },
+    ],
+    [state],
+  )
 
   const onChange = (slice) => (e) =>
     dispatch({ type: `user/${slice}`, payload: { [slice]: e.target.value } })
@@ -64,6 +68,22 @@ const Form = () => {
           Submit
         </button>
       </div>
+      <table className='form__table'>
+        <thead>
+          <tr>
+            {fields.map(({ name }) => (
+              <th key={name}>{name}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {Object.values(store).map((value) => (
+              <th key={value}>{value}</th>
+            ))}
+          </tr>
+        </tbody>
+      </table>
     </form>
   )
 }
